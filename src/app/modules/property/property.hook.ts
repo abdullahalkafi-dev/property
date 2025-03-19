@@ -100,6 +100,7 @@ export const newReservationAddHook = catchAsync(
                 extraData: 'Custom Data For User',
               },
             };
+            console.log(message);
 
             await admin.messaging().send(message);
           } catch (error) {
@@ -208,7 +209,7 @@ export const reservationStatusChangeHook = catchAsync(
                 extraData: 'Custom Data For User',
               },
             };
-
+            console.log(message);
             await admin.messaging().send(message);
           } catch (error) {
             console.error(`Error emitting to user ${owner.owner}:`, error);
