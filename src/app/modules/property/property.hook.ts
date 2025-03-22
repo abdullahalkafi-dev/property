@@ -9,7 +9,7 @@ import * as admin from 'firebase-admin';
 
 export const newReservationAddHook = catchAsync(
   async (req: Request, res: Response) => {
-    console.log('req body from real data', req.body);
+
     const reqData = req.body;
     // const reqData = {
     //   property: '183308',
@@ -18,9 +18,8 @@ export const newReservationAddHook = catchAsync(
     //   push_data: '{"reservation": 17024718}',
     // };
 
-    console.log(reqData);
     const pushData = JSON.parse(reqData.push_data);
-    console.log(pushData);
+ 
     const reservationId = pushData.reservation;
 
     const reservationDetails = await fetchFromApi(
@@ -40,9 +39,7 @@ export const newReservationAddHook = catchAsync(
 
     rooms.forEach(async (room: any) => {
       const zakRoomId = room.id_zak_room;
-      console.log(zakRoomId);
       const property = await Property.findOne({ zakRoomId });
-      console.log(property);
       if (!property) {
         return sendResponse(res, {
           success: false,
@@ -57,7 +54,6 @@ export const newReservationAddHook = catchAsync(
         to: room.dto,
         total: reservationDetails?.data?.price.total,
       };
-      console.log(formattedData);
       const ownerList = await Property.find({
         zakRoomId: zakRoomId,
       }).select('owner');
@@ -100,7 +96,6 @@ export const newReservationAddHook = catchAsync(
                 extraData: 'Custom Data For User',
               },
             };
-            console.log(message);
 
             await admin.messaging().send(message);
           } catch (error) {
@@ -120,7 +115,6 @@ export const newReservationAddHook = catchAsync(
 
 export const reservationStatusChangeHook = catchAsync(
   async (req: Request, res: Response) => {
-    console.log(req.body);
     // const data = {
     //   property: '183308',
     //   event: 'change_status',
@@ -129,7 +123,6 @@ export const reservationStatusChangeHook = catchAsync(
     //     '{"reservation": 21306358,"old_status": "confirmed","new_status": "cancelled"}',
     // };
     const data = req.body;
-    console.log(data);
     const pushData = JSON.parse(data.push_data);
     //  console.log(pushData);
     const reservationId = pushData.reservation;
@@ -137,7 +130,6 @@ export const reservationStatusChangeHook = catchAsync(
       'https://kapi.wubook.net/kp/reservations/fetch_one_reservation',
       new URLSearchParams({ id: reservationId })
     );
-    console.log(reservationDetails);
     if (!reservationDetails) {
       return sendResponse(res, {
         success: false,
@@ -150,9 +142,7 @@ export const reservationStatusChangeHook = catchAsync(
 
     rooms.forEach(async (room: any) => {
       const zakRoomId = room.id_zak_room;
-      console.log(zakRoomId);
       const property = await Property.findOne({ zakRoomId });
-      console.log(property);
       if (!property) {
         return sendResponse(res, {
           success: false,
@@ -166,7 +156,6 @@ export const reservationStatusChangeHook = catchAsync(
         from: room.dfrom,
         to: room.dto,
       };
-      console.log(formattedData);
       const ownerList = await Property.find({
         zakRoomId: zakRoomId,
       }).select('owner');
@@ -209,7 +198,6 @@ export const reservationStatusChangeHook = catchAsync(
                 extraData: 'Custom Data For User',
               },
             };
-            console.log(message);
             await admin.messaging().send(message);
           } catch (error) {
             console.error(`Error emitting to user ${owner.owner}:`, error);

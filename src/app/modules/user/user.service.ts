@@ -37,7 +37,6 @@ const updateProfileToDB = async (
   payload: Partial<TUser>
 ): Promise<Partial<TUser | null>> => {
   const { id } = user;
-  console.log(payload);
   const isExistUser = await User.isExistUserById(id);
   if (!isExistUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");

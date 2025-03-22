@@ -6,7 +6,6 @@ export function sortReservationsByDates(
   query: { startDate: string; endDate: string }
 ): TReservation[] {
   const { startDate, endDate } = query;
-  console.log('query from sort', query);
   const start = new Date(startDate.split('/').reverse().join('-'));
   const end = new Date(endDate.split('/').reverse().join('-'));
 

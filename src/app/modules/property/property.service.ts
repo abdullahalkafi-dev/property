@@ -10,7 +10,6 @@ import {
 } from './property.utils';
 
 export const fetchFromApi = async (url: string, body?: URLSearchParams) => {
-  console.log(url);
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -96,7 +95,6 @@ const getAllReservations = async (
       0
     ).toLocaleDateString('en-GB');
   }
-  console.log(filters);
   return fetchFromApi(
     'https://kapi.wubook.net/kp/reservations/fetch_reservations',
     new URLSearchParams({ filters: JSON.stringify(filters) })
@@ -143,7 +141,6 @@ const getAllReservationByCreatedTime = async (
       1
     ).toLocaleDateString('en-GB');
   }
-  console.log(filters);
   return fetchFromApi(
     'https://kapi.wubook.net/kp/reservations/fetch_reservations',
     new URLSearchParams({ filters: JSON.stringify(filters) })

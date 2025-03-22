@@ -20,7 +20,6 @@ import { ResetToken } from '../resetToken/resetToken.model';
 //login
 const loginUserFromDB = async (payload: Partial<ILoginData>) => {
   const { email, password } = payload;
-  console.log(payload);
   if (!password) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Password is required');
   }
@@ -86,14 +85,12 @@ const forgetPasswordToDB = async (email: string) => {
     oneTimeCode: otp,
     expireAt: new Date(Date.now() + 3 * 60000),
   };
-  console.log(authentication);
-  console.log(value);
+
   await User.findOneAndUpdate({ email }, { $set: { authentication } });
 };
 
 //verify email
 const verifyEmailToDB = async (payload: IVerifyEmail) => {
-  console.log(payload);
   const { email, oneTimeCode } = payload;
   const isExistUser = await User.findOne({ email }).select('+authentication');
   if (!isExistUser) {

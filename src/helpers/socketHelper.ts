@@ -7,7 +7,6 @@ const socket = (io: Server) => {
     console.log('A user connected', socket.id);
 
     socket.on('fcmToken', async data => { 
-      console.log(data);
       if(!data.userId || !data.fcmToken) return;
       try {
         const user = await User.findByIdAndUpdate(
@@ -15,7 +14,6 @@ const socket = (io: Server) => {
           { fcmToken: data.fcmToken },
           { new: true, upsert: true }
         );
-        console.log(user);
       } catch (error) {
         console.log(error);
       }
