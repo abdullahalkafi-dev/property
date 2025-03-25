@@ -9,7 +9,6 @@ import * as admin from 'firebase-admin';
 
 export const newReservationAddHook = catchAsync(
   async (req: Request, res: Response) => {
-
     const reqData = req.body;
     // const reqData = {
     //   property: '183308',
@@ -19,7 +18,7 @@ export const newReservationAddHook = catchAsync(
     // };
 
     const pushData = JSON.parse(reqData.push_data);
- 
+
     const reservationId = pushData.reservation;
 
     const reservationDetails = await fetchFromApi(
@@ -49,7 +48,7 @@ export const newReservationAddHook = catchAsync(
       }
       const formattedData = {
         zakRoomId: zakRoomId,
-        title: `🛎️ ${property.roomName} - New Reservation Have Been Added`,
+        title: `🛎️ ${property.roomName} - Ha recibido una nueva Reserva`,
         from: room.dfrom,
         to: room.dto,
         total: reservationDetails?.data?.price.total,
@@ -152,7 +151,7 @@ export const reservationStatusChangeHook = catchAsync(
       }
       const formattedData = {
         zakRoomId: zakRoomId,
-        title: `🛎️ ${property.roomName} - Reservation Status Changed to ${reservationDetails?.data?.status}`,
+        title: `🛎️ ${property.roomName} -  El estado de su Reserva ha cambiado ${reservationDetails?.data?.status}`,
         from: room.dfrom,
         to: room.dto,
       };
