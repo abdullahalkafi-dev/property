@@ -49,14 +49,14 @@ const loginUserFromDB = async (payload: Partial<ILoginData>) => {
   const accessToken = jwtHelper.createToken(
     { id: isExistUser._id, role: isExistUser.role, email: isExistUser.email },
     config.jwt.jwt_secret as Secret,
-    '7d'
+    '100y'
   );
 
   //create token
   const refreshToken = jwtHelper.createToken(
     { id: isExistUser._id, role: isExistUser.role, email: isExistUser.email },
     config.jwt.jwtRefreshSecret as Secret,
-    '15d'
+    '200y'
   );
 
   const { password: _, ...userWithoutPassword } = isExistUser.toObject();
