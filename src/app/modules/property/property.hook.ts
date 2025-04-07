@@ -9,7 +9,7 @@ import * as admin from 'firebase-admin';
 
 export const newReservationAddHook = catchAsync(
   async (req: Request, res: Response) => {
-    // const reqData = req.body;
+    // const reqData = req.body;jj 
     const reqData = {
       property: '183308',
       event: 'new_reservation',
@@ -48,7 +48,7 @@ export const newReservationAddHook = catchAsync(
       }
       const formattedData = {
         zakRoomId: zakRoomId,
-        title: `🛎️ ${property.roomName} - Ha recibido una nueva Reserva`,
+        title: `🛎️ ${property.roomName} 🛎️`,
         from: room.dfrom,
         to: room.dto,
         total: reservationDetails?.data?.price.total,
@@ -89,7 +89,9 @@ export const newReservationAddHook = catchAsync(
               token: fcm?.fcmToken, // Device FCM Token
               notification: {
                 title: formattedData.title,
-                body: `Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
+                body: ` 
+                ${reservationDetails.data.status}
+                Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
               },
               data: {
                 extraData: 'Custom Data For User',
@@ -151,7 +153,7 @@ export const reservationStatusChangeHook = catchAsync(
       }
       const formattedData = {
         zakRoomId: zakRoomId,
-        title: `🛎️ ${property.roomName} -  El estado de su Reserva ha cambiado ${reservationDetails?.data?.status}`,
+        title: `🛎️ ${property.roomName} - ${reservationDetails?.data?.status}`,
         from: room.dfrom,
         to: room.dto,
       };
@@ -191,7 +193,9 @@ export const reservationStatusChangeHook = catchAsync(
               token: fcm?.fcmToken, // Device FCM Token
               notification: {
                 title: formattedData.title,
-                body: ` Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
+                body: `
+                ${property.roomName}  El estado de su Reserva ha cambiado   ${reservationDetails?.data?.status}
+                Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
               },
               data: {
                 extraData: 'Custom Data For User',
