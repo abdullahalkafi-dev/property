@@ -48,7 +48,7 @@ export const newReservationAddHook = catchAsync(
       }
       const formattedData = {
         zakRoomId: zakRoomId,
-        title: `🛎️ ${property.roomName} 🛎️`,
+        title: `🛎️ Nueva Reserva en ${property.roomName}`,
         from: room.dfrom,
         to: room.dto,
         total: reservationDetails?.data?.price.total,
@@ -89,7 +89,7 @@ export const newReservationAddHook = catchAsync(
               token: fcm?.fcmToken, // Device FCM Token
               notification: {
                 title: formattedData.title,
-                body: `${reservationDetails.data.status} || Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
+                body: `Ha recibido una nueva reserva para ${property.roomName} , Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
               },
               data: {
                 extraData: 'Custom Data For User',
@@ -191,8 +191,7 @@ export const reservationStatusChangeHook = catchAsync(
               token: fcm?.fcmToken, // Device FCM Token
               notification: {
                 title: formattedData.title,
-                body: `${property.roomName}  El estado de su Reserva ha cambiado   ${reservationDetails?.data?.status}
-                Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
+                body: `${property.roomName}  El estado de su Reserva ha cambiado   ${reservationDetails?.data?.status} Desde: ${formattedData.from} hasta: ${formattedData.to}`, // Message
               },
               data: {
                 extraData: 'Custom Data For User',
