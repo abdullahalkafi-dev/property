@@ -30,9 +30,7 @@ const auth =
         if (!userDetails) {
           throw new ApiError(StatusCodes.UNAUTHORIZED, 'User not found');
         }
-        if (userDetails.isDeleted) {
-          throw new ApiError(StatusCodes.UNAUTHORIZED, 'User is deleted');
-        }
+  
         //guard user
         if (roles.length && !roles.includes(verifyUser.role)) {
           throw new ApiError(

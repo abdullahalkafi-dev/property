@@ -29,13 +29,7 @@ const loginUserFromDB = async (payload: Partial<ILoginData>) => {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
 
-  //check user status
-  if (isExistUser.isDeleted) {
-    throw new ApiError(
-      StatusCodes.BAD_REQUEST,
-      'Your account has been deleted, Please contact with admin'
-    );
-  }
+
 
   //check match password
   if (
