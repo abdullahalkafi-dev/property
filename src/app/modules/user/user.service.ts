@@ -18,6 +18,11 @@ const createUserToDB = async (payload: Partial<TUser>) => {
   }
   // Create user first
   const user = await User.create(payload);
+  if (!user) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'User not created');
+  }
+   
+return user;
 };
 
 const getUserProfileFromDB = async (
@@ -63,7 +68,7 @@ const getSingleUser = async (id: string): Promise<TUser | null> => {
 
 //get all users
 const getAllUsers = async (): Promise<TUser[]> => {
-  const users = await User.find({ isDeleted: false }).select('-password');
+  const users = await User.find().select('-password');
   const property = await Property.find();
 
   const usersWithProperty = users.map(user => {
@@ -84,7 +89,10 @@ const deleteUser = async (id: string): Promise<void> => {
   if (user.role === 'admin') {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Admin cannot be deleted');
   }
-  await User.findByIdAndUpdate(id, { isDeleted: true });
+  const deleteUser = await User.findByIdAndDelete(id);
+  if (deleteUser) {
+    await Property.deleteMany({ owner: id });
+  }
 };
 
 export const UserService = {

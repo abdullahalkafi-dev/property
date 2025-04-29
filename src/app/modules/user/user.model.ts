@@ -58,11 +58,8 @@ const userSchema = new Schema<TUser, UserModal>(
         },
       },
       select: 0,
-    },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
+    }
+ 
   },
   { timestamps: true }
 );

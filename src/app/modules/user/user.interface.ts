@@ -16,7 +16,6 @@ export type TUser = {
   };
   createdAt: Date;
   updatedAt: Date;
-  isDeleted: boolean;
   property?:string[];
   fcmToken?:string;
 };
