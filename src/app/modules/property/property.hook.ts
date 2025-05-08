@@ -9,13 +9,13 @@ import * as admin from 'firebase-admin';
 
 export const newReservationAddHook = catchAsync(
   async (req: Request, res: Response) => {
-    const reqData = req.body;
-    // const reqData = {
-    //   property: '183308',
-    //   event: 'new_reservation',
-    //   url: 'http://115.127.156.13:5002/api/v1/new-reservation-added-hook',
-    //   push_data: '{"reservation": 17024718}',
-    // };
+    // const reqData = req.body;
+    const reqData = {
+      property: '183308',
+      event: 'new_reservation',
+      url: 'http://115.127.156.13:5002/api/v1/new-reservation-added-hook',
+      push_data: '{"reservation": 17024718}',
+    };
 
     const pushData = JSON.parse(reqData.push_data);
 
