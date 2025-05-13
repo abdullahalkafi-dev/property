@@ -26,6 +26,82 @@ export const getAllRooms = async () => {
   return fetchFromApi('https://kapi.wubook.net/kp/property/fetch_rooms');
 };
 
+// const getAllReservations = async (
+//   filters: {
+//     arrival?: { from: string; to: string };
+//     departure?: { from: string; to: string };
+//     pager?: { limit: number; offset: number };
+//   } = {
+//     arrival: {
+//       from: new Date(
+//         new Date().getFullYear(),
+//         new Date().getMonth(),
+//         1
+//       ).toLocaleDateString('en-GB'),
+//       to: new Date(
+//         new Date().getFullYear(),
+//         new Date().getMonth() + 1,
+//         0
+//       ).toLocaleDateString('en-GB'),
+//     },
+//     departure: {
+//       from: new Date(
+//         new Date().getFullYear(),
+//         new Date().getMonth(),
+//         1
+//       ).toLocaleDateString('en-GB'),
+//       to: new Date(
+//         new Date().getFullYear(),
+//         new Date().getMonth() + 1,
+//         0
+//       ).toLocaleDateString('en-GB'),
+//     },
+//     pager: { limit: 64, offset: 0 },
+//   }
+// ) => {
+//   if (filters.departure && filters.arrival) {
+//     const departureToDate = new Date(
+//       filters.departure.to.split('/').reverse().join('-')
+//     );
+//     filters.departure.to = new Date(
+//       departureToDate.getFullYear(),
+//       departureToDate.getMonth() + 4,
+//       0
+//     ).toLocaleDateString('en-GB');
+
+//     const departureFromDate = new Date(
+//       filters.departure.from.split('/').reverse().join('-')
+//     );
+//     filters.departure.from = new Date(
+//       departureFromDate.getFullYear(),
+//       departureFromDate.getMonth() - 1,
+//       0
+//     ).toLocaleDateString('en-GB');
+//     const arrivalToDate = new Date(
+//       filters.arrival.to.split('/').reverse().join('-')
+//     );
+//     filters.arrival.to = new Date(
+//       arrivalToDate.getFullYear(),
+//       arrivalToDate.getMonth() + 1,
+//       0
+//     ).toLocaleDateString('en-GB');
+
+//     const arrivalFromDate = new Date(
+//       filters.arrival.from.split('/').reverse().join('-')
+//     );
+//     filters.arrival.from = new Date(
+//       arrivalFromDate.getFullYear(),
+//       arrivalFromDate.getMonth() - 4,
+//       0
+//     ).toLocaleDateString('en-GB');
+//   }
+//   return fetchFromApi(
+//     'https://kapi.wubook.net/kp/reservations/fetch_reservations',
+//     new URLSearchParams({ filters: JSON.stringify(filters) })
+//   );
+// };
+
+
 const getAllReservations = async (
   filters: {
     arrival?: { from: string; to: string };
@@ -63,44 +139,53 @@ const getAllReservations = async (
     const departureToDate = new Date(
       filters.departure.to.split('/').reverse().join('-')
     );
+
+    // Make sure the range covers the reservation until the end of the month (not just 4 months after)
     filters.departure.to = new Date(
       departureToDate.getFullYear(),
-      departureToDate.getMonth() + 5,
+      departureToDate.getMonth() + 12,  // This will extend the range for longer reservations
       0
     ).toLocaleDateString('en-GB');
 
     const departureFromDate = new Date(
       filters.departure.from.split('/').reverse().join('-')
     );
+    
+    // Extend the range for long reservations that could start earlier
     filters.departure.from = new Date(
       departureFromDate.getFullYear(),
-      departureFromDate.getMonth() - 1,
-      0
+      departureFromDate.getMonth() - 12,  // Extend back to cover previous months
+      1
     ).toLocaleDateString('en-GB');
+
     const arrivalToDate = new Date(
       filters.arrival.to.split('/').reverse().join('-')
     );
+
+    // Extending arrival to 12 months after for long bookings
     filters.arrival.to = new Date(
       arrivalToDate.getFullYear(),
-      arrivalToDate.getMonth() + 1,
+      arrivalToDate.getMonth() + 12, 
       0
     ).toLocaleDateString('en-GB');
 
     const arrivalFromDate = new Date(
       filters.arrival.from.split('/').reverse().join('-')
     );
+
+    // Extending arrival range to cover previous months
     filters.arrival.from = new Date(
       arrivalFromDate.getFullYear(),
-      arrivalFromDate.getMonth() - 5,
-      0
+      arrivalFromDate.getMonth() - 12,
+      1
     ).toLocaleDateString('en-GB');
   }
+
   return fetchFromApi(
     'https://kapi.wubook.net/kp/reservations/fetch_reservations',
     new URLSearchParams({ filters: JSON.stringify(filters) })
   );
 };
-
 ////////////////////////
 const getAllReservationByCreatedTime = async (
   filters: {
