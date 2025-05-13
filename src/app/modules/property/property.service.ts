@@ -65,7 +65,7 @@ const getAllReservations = async (
     );
     filters.departure.to = new Date(
       departureToDate.getFullYear(),
-      departureToDate.getMonth() + 4,
+      departureToDate.getMonth() + 5,
       0
     ).toLocaleDateString('en-GB');
 
@@ -91,7 +91,7 @@ const getAllReservations = async (
     );
     filters.arrival.from = new Date(
       arrivalFromDate.getFullYear(),
-      arrivalFromDate.getMonth() - 3,
+      arrivalFromDate.getMonth() - 5,
       0
     ).toLocaleDateString('en-GB');
   }
