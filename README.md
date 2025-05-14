@@ -11,7 +11,6 @@ The Property Reservation Management Backend is a comprehensive system designed t
 - **Language**: TypeScript
 - **Database**: MongoDB (with Mongoose ODM)
 - **Authentication**: JWT (JSON Web Tokens)
-- **Payment Processing**: Stripe
 - **Email Services**: SMTP integration
 - **Push Notifications**: Firebase Cloud Messaging (FCM)
 
@@ -84,9 +83,6 @@ src/
 - Push notifications using Firebase Cloud Messaging (FCM)
 - Webhook handlers for external events
 
-### 4.6 Payment Integration
-- Stripe payment processing
-- Webhook handling for payment events
 
 ## 5. API Endpoints
 
@@ -123,9 +119,6 @@ The system integrates with the WeBook API for:
 - Firebase Admin SDK for push notifications
 - Real-time alerts for reservation changes and new bookings
 
-### 6.3 Stripe
-- Payment processing
-- Webhook handling for payment events
 
 ## 7. Data Models
 
@@ -214,7 +207,6 @@ npm start
 ```
 
 ### 9.3 Deployment
-- Vercel deployment configuration available
 - Environment variable management for different environments
 
 ## 10. System Requirements
@@ -223,12 +215,10 @@ npm start
 - Node.js 14+ runtime
 - MongoDB database
 - SMTP server for email functionality
-- Stripe account for payment processing
 - Firebase project for push notifications
 
 ### 10.2 API Keys and Configuration
 - WeBook API key
-- Stripe API keys
 - JWT secrets
 - SMTP server credentials
 - MongoDB connection string
