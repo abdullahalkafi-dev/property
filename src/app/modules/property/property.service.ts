@@ -143,7 +143,7 @@ const getAllReservations = async (
     // Make sure the range covers the reservation until the end of the month (not just 4 months after)
     filters.departure.to = new Date(
       departureToDate.getFullYear(),
-      departureToDate.getMonth() + 12,  // This will extend the range for longer reservations
+      departureToDate.getMonth() + 7,  // This will extend the range for longer reservations
       0
     ).toLocaleDateString('en-GB');
 
@@ -154,7 +154,7 @@ const getAllReservations = async (
     // Extend the range for long reservations that could start earlier
     filters.departure.from = new Date(
       departureFromDate.getFullYear(),
-      departureFromDate.getMonth() - 12,  // Extend back to cover previous months
+      departureFromDate.getMonth() - 7,  // Extend back to cover previous months
       1
     ).toLocaleDateString('en-GB');
 
@@ -165,7 +165,7 @@ const getAllReservations = async (
     // Extending arrival to 12 months after for long bookings
     filters.arrival.to = new Date(
       arrivalToDate.getFullYear(),
-      arrivalToDate.getMonth() + 12, 
+      arrivalToDate.getMonth() + 7, 
       0
     ).toLocaleDateString('en-GB');
 
@@ -176,7 +176,7 @@ const getAllReservations = async (
     // Extending arrival range to cover previous months
     filters.arrival.from = new Date(
       arrivalFromDate.getFullYear(),
-      arrivalFromDate.getMonth() - 12,
+      arrivalFromDate.getMonth() - 7,
       1
     ).toLocaleDateString('en-GB');
   }
